@@ -62,6 +62,17 @@ function resetPermutation(){
     erasePermutation();
     //showAlphabets();
     drawPermutation();
+    decrypt();
+}
+
+//decrypt the plaintext according to the current permutation
+function decrypt(){
+    var ciphertext=document.getElementById("ciphertextArea").value;
+    myFunc=function(c){
+        return alphabet[perm[c]];
+    };
+    var plainText = ciphertext.split('').map(myFunc).join("");
+    document.getElementById("plaintextArea").value = plainText;
 }
 
 //For the display of the alphabet, wrap the space
@@ -87,6 +98,7 @@ perm = initialPermutation();
 randomizePermutation();
 drawPermutation();
 showAlphabets();
+decrypt();
 
 //console.log(alphabet);
 //var alphabet2 = alphabet.slice(0);
