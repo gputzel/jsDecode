@@ -4,7 +4,22 @@
 <link rel="stylesheet" type="text/css" href="CSS/style.css">
 </head>
 <body>
-<canvas id="pict" width="400" height="550">
+<table>
+    <tr>
+        <td>
+            <h2 class="label">Ciphertext</h2>
+            <p><textarea id="ciphertextArea" rows="4" cols="30">ldkjfs</textarea></p>
+        </td>
+        <td>
+            <p><canvas id="pict" width="400" height="550"></canvas></p>
+            <button id="randButton" onclick="resetPermutation();">Randomize Permutation</button>              
+        </td>
+        <td>
+            <h2 class="label">Plaintext</h2>
+            <textarea id="plaintextArea" rows="4" cols="30"></textarea>
+        </td>
+    </tr>
+</table>
 <script type="text/javascript" src="decode.js"></script>
 </body>
 </html>

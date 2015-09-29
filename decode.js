@@ -1,6 +1,7 @@
 var c = document.getElementById("pict");
 var ctx = c.getContext("2d");
 var w = c.width;
+var h = c.height;
 
 var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ".split("");
 
@@ -32,12 +33,35 @@ function randomizePermutation(){
 
 function drawPermutation(){
     ctx.strokeStyle="#FF0000";
+    ctx.beginPath();
     for(var i=0; i < alphabet.length; i++){
         //console.log(i,alphabet[i],perm[alphabet[i]])
         ctx.moveTo(25, 16+20*i);
         ctx.lineTo(w-32,16+20*perm[alphabet[i]]);
     }
     ctx.stroke();
+    ctx.closePath();
+}
+
+function showAlphabets(){
+    ctx.font = "14px Arial";
+    //Draw alphabet on left and right side of canvas
+    for (var i=0; i<alphabet.length; i++){
+        ctx.fillText(wrapSpace(alphabet[i]),10,20+20*i);
+        ctx.fillText(wrapSpace(alphabet[i]),w-25,20+20*i);
+    }
+}
+
+function erasePermutation(){
+    ctx.fillStyle="white";
+    ctx.fillRect(24,0,w-50,h); 
+}
+
+function resetPermutation(){
+    randomizePermutation();
+    erasePermutation();
+    //showAlphabets();
+    drawPermutation();
 }
 
 //For the display of the alphabet, wrap the space
@@ -51,16 +75,18 @@ function wrapSpace(s){
     }
 }
 
+/*
 ctx.font = "14px Arial";
 //Draw alphabet on left and right side of canvas
 for (var i=0; i<alphabet.length; i++){
     ctx.fillText(wrapSpace(alphabet[i]),10,20+20*i);
     ctx.fillText(wrapSpace(alphabet[i]),w-25,20+20*i);
-}
+}*/
 
 perm = initialPermutation();
 randomizePermutation();
 drawPermutation();
+showAlphabets();
 
 //console.log(alphabet);
 //var alphabet2 = alphabet.slice(0);
