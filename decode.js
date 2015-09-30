@@ -115,7 +115,7 @@ for (var i=0; i<alphabet.length; i++){
 function trialMove(){
     output=document.getElementById("plaintextArea").value;
     initialLL = likelihood(output);
-    console.log(initialLL);
+    //console.log(initialLL);
     //generate trial move
     //perm[alphabet[i]]=perm[alphabet[j]] and vice versa
     var len = alphabet.length;
@@ -124,7 +124,7 @@ function trialMove(){
     while (i === j){
         j = Math.floor(Math.random()*len);
     }
-    console.log("Trial move:", i, j);
+    //console.log("Trial move:", i, j);
     //Make the change to the permutation (we will undo it if
     //the move is rejected)
     var temp = perm[alphabet[i]];
@@ -133,21 +133,21 @@ function trialMove(){
     //Find the new likelihood
     var newOutput = decrypt(perm);
     newLL = likelihood(newOutput);
-    console.log("New LL: ", newLL);
+    //console.log("New LL: ", newLL);
     //If the new LL is greater, then accept the move
     if (newLL > initialLL){
-        console.log("Move accepted, increases LL.");
+        //console.log("Move accepted, increases LL.");
         updatePermutation();
         return true;
     }
     var delta = newLL - initialLL;
-    console.log("deltaLL = ",delta);
+    //console.log("deltaLL = ",delta);
     T = parseFloat(document.getElementById("temperatureArea").value);
-    console.log("T = ", T); 
+    //console.log("T = ", T); 
     var beta = 1.0/T;
     if (Math.random()<Math.pow(10.0,beta*delta)){
         //Accept the move
-        console.log("Move accepted by Metropolis");
+        //console.log("Move accepted by Metropolis");
         updatePermutation();
         return true;
     }
