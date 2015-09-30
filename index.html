@@ -2,6 +2,8 @@
 <head>
 <title>jsDecode</title>
 <link rel="stylesheet" type="text/css" href="CSS/style.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="transition.js"></script>
 </head>
 <body>
 <h1>Markov Chain Monte Carlo decoder</h1>
@@ -9,9 +11,10 @@
     <tr>
         <td>
             <h2 class="label">Ciphertext</h2>
-            <p><textarea id="ciphertextArea" rows="4" cols="30">NZRFQRFQFOAWQNWKN</textarea></p>
-            <h2 class="label">Training Text URL</h2>
-            <p><textarea id="trainingArea" rows="2" cols="30">http://www.gutenberg.org/cache/epub/2600/pg2600.txt</textarea></p>
+            <p><textarea id="ciphertextArea" rows="16" cols="30">ZVLZPX BVQRZTUVSTFQPJYJVYTLJVLZPX BVQRZTUV PVSYLQVUZLJSVZOYJPVZUSPJIVLZPX BVTFVZVPZUS LVNP QJFFVYRZYVCUSJPD JFVYPZUFTYT UFVOP LV UJVFYZYJVY VZU YRJPV UVZVFYZYJVFNZQJVTYVLCFYVN FFJFFVZVNP NJPYIVYRZYVTFVCFCZKKIVQRZPZQYJPTHJSVZFVLJL PIKJFFUJFFVYRJVNP EZETKTYIVSTFYPTECYT UV OVYRJVUJWYVFYZYJVSJNJUSFV UKIV UVYRJVQCPPJUYVFYZYJVZUSVU YV UVYRJVFJMCJUQJV OVJBJUYFVYRZYVNPJQJSJSVTYVYRTFVFNJQTOTQVXTUSV OVLJL PIKJFFUJFFVTFVQZKKJSVYRJVLZPX BVNP NJPYIVLZPX BVQRZTUFVRZBJVLZUIVZNNKTQZYT UFVZFVFYZYTFYTQZKVL SJKFV OVPJZKVG PKSVNP QJFFJF</textarea></p>
+            <h2 class="label">Training Text</h2>
+            <!--<p><textarea id="trainingArea" rows="2" cols="30">http://www.gutenberg.org/cache/epub/2600/pg2600.txt</textarea></p>-->
+            <p id="traininglink"><a href="http://www.gutenberg.org/cache/epub/2600/pg2600.txt">War and Peace</a></p>
             <h2 class="label">"Temperature"</h2>
             <p><textarea id="temperatureArea" rows="1" cols="30">1.0</textarea></p>
         </td>
@@ -23,7 +26,7 @@
                         <button id="randButton" onclick="resetPermutation();">Randomize Permutation</button>
                     </td>
                     <td>
-                        <button id="goButton" style="width:100px">GO!</button>
+                        <button id="goButton" onclick="go();" style="width:100px">GO!</button>
                     </td>
                 </tr>
             </table>
@@ -32,7 +35,7 @@
             <h2 class="label">Likelihood Plot</h2>
             <p><canvas id="likelihood" width="200" height="150"></canvas></p>
             <h2 class="label">Output</h2>
-            <textarea id="plaintextArea" rows="4" cols="30"></textarea>
+            <textarea id="plaintextArea" rows="16" cols="30"></textarea>
         </td>
     </tr>
 </table>

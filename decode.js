@@ -94,6 +94,9 @@ for (var i=0; i<alphabet.length; i++){
     ctx.fillText(wrapSpace(alphabet[i]),w-25,20+20*i);
 }*/
 
+function go(){
+}
+
 perm = initialPermutation();
 randomizePermutation();
 drawPermutation();

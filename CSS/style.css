@@ -33,3 +33,7 @@ canvas {
     margin:auto;
     display:block;
 }
+
+#traininglink {
+    text-align:center;
+}
