@@ -1,9 +1,10 @@
-var c = document.getElementById("pict");
+/*var c = document.getElementById("pict");
 var ctx = c.getContext("2d");
 var w = c.width;
 var h = c.height;
 
 var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ".split("");
+*/
 
 function initialPermutation(){
     var d = new Object();
@@ -166,6 +167,13 @@ function go(){
         trialMove();
     }
 }
+
+var c = document.getElementById("pict");
+var ctx = c.getContext("2d");
+var w = c.width;
+var h = c.height;
+
+var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ".split("");
 
 perm = initialPermutation();
 randomizePermutation();
