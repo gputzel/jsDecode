@@ -163,6 +163,18 @@ function trialMove(){
 }
 
 function go(){
+    //console.log("Go go go");
+    document.getElementById("goButton").innerHTML="Stop";
+    document.getElementById("goButton").onclick=stop;
+}
+
+function stop(){
+    //console.log("Stopping");
+    document.getElementById("goButton").innerHTML="Go!";
+    document.getElementById("goButton").onclick=go;
+}
+
+function thousandMoves(){
     for(var i = 0; i<1000; i++){
         trialMove();
     }
@@ -180,6 +192,13 @@ randomizePermutation();
 drawPermutation();
 showAlphabets();
 document.getElementById("plaintextArea").value = decrypt(perm);
+
+//Check for web workers, and if they are available, change
+//the 1000 Trial Moves button to Go!
+if(typeof(Worker) === "undefined") {
+    document.getElementById("goButton").innerHTML = "1000 Trial Moves";
+    document.getElementById("goButton").onclick = thousandMoves;
+}
 
 //console.log(alphabet);
 //var alphabet2 = alphabet.slice(0);
