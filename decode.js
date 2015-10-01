@@ -6,7 +6,7 @@ var h = c.height;
 var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ".split("");
 */
 
-function drawPermutation(perm){
+function drawPermutation(alphabet,perm){
     ctx.strokeStyle="#FF0000";
     ctx.beginPath();
     for(var i=0; i < alphabet.length; i++){
@@ -18,7 +18,7 @@ function drawPermutation(perm){
     ctx.closePath();
 }
 
-function showAlphabets(){
+function showAlphabets(alphabet){
     ctx.font = "14px Arial";
     //Draw alphabet on left and right side of canvas
     for (var i=0; i<alphabet.length; i++){
@@ -35,7 +35,7 @@ function erasePermutation(){
 function updatePermutation(){
     erasePermutation();
     drawPermutation();
-    document.getElementById("plaintextArea").value = decrypt(perm);   
+    //document.getElementById("plaintextArea").value = decrypt(perm);   
 }
 
 //For the display of the alphabet, wrap the space
@@ -61,12 +61,14 @@ function go(){
     //console.log("Go go go");
     document.getElementById("goButton").innerHTML="Stop";
     document.getElementById("goButton").onclick=stop;
+    w.postMessage("Go");
 }
 
 function stop(){
     //console.log("Stopping");
     document.getElementById("goButton").innerHTML="Go!";
     document.getElementById("goButton").onclick=go;
+    w.postMessage("Stop");
 }
 
 function thousandMoves(){
@@ -81,8 +83,8 @@ var w = c.width;
 var h = c.height;
 var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ".split("");
 
-drawPermutation();
-showAlphabets();
+//drawPermutation();
+showAlphabets(alphabet);
 //document.getElementById("plaintextArea").value = decrypt(perm);
 w = undefined;
 
@@ -94,11 +96,12 @@ if(typeof(Worker) === "undefined") {
 }
 else{
     if(typeof(w) == "undefined"){
-        console.log("Creating worker");
+        //console.log("Creating worker");
         w = new Worker("worker.js");
         w.onmessage = function(event){
-            console.log(event.data);
+            console.log("Message from worker:",event.data);
         };
+        w.postMessage("Blah");
     }
 }
 

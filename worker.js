@@ -106,3 +106,13 @@ function trialMove(){
     }
     //console.log(Math.pow(10.00,0.5));
 }
+
+onmessage = function(e){
+    console.log("Message received from main script:",e.data);
+}
+
+var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ".split("");
+perm = initialPermutation();
+randomizePermutation();
+
+postMessage(perm);
