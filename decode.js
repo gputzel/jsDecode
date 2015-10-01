@@ -6,7 +6,7 @@ var h = c.height;
 var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ".split("");
 */
 
-function drawPermutation(){
+function drawPermutation(perm){
     ctx.strokeStyle="#FF0000";
     ctx.beginPath();
     for(var i=0; i < alphabet.length; i++){
@@ -79,14 +79,11 @@ var c = document.getElementById("pict");
 var ctx = c.getContext("2d");
 var w = c.width;
 var h = c.height;
-
 var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ".split("");
 
-perm = initialPermutation();
-randomizePermutation();
 drawPermutation();
 showAlphabets();
-document.getElementById("plaintextArea").value = decrypt(perm);
+//document.getElementById("plaintextArea").value = decrypt(perm);
 w = undefined;
 
 //Check for web workers, and if they are available, change
