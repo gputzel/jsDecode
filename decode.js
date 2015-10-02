@@ -9,26 +9,6 @@ function wrapSpace(s){
     }
 }
 
-function go(){
-    //console.log("Go go go");
-    document.getElementById("goButton").innerHTML="Stop";
-    document.getElementById("goButton").onclick=stop;
-    w.postMessage("Go");
-}
-
-function stop(){
-    //console.log("Stopping");
-    document.getElementById("goButton").innerHTML="Go!";
-    document.getElementById("goButton").onclick=go;
-    w.postMessage("Stop");
-}
-
-function thousandMoves(){
-    for(var i = 0; i<1000; i++){
-        trialMove();
-    }
-}
-
 //Wrapper for the canvas that draws the permutation
 function PermutationCanvasState(canvas,alphabet){
     this.canvas = canvas;
@@ -210,9 +190,33 @@ function thousandMoves(){
     updatePermutation();
 }
 
+function step(){
+    for (var i=0;i<100;i++){
+        trialMove();
+    }
+    updatePermutation();
+}
+
+function go(){
+    //console.log("Go go go");
+    document.getElementById("goButton").innerHTML="Stop";
+    document.getElementById("goButton").onclick=stop;
+    //w.postMessage("Go");
+    plotTimer = setInterval(step,50);
+}
+
+function stop(){
+    //console.log("Stopping");
+    document.getElementById("goButton").innerHTML="Go!";
+    document.getElementById("goButton").onclick=go;
+    //w.postMessage("Stop");
+    clearInterval(plotTimer);
+}
+
 var pcState;
 var perm;
 var alphabet;
+var plotTimer;
 
 function init(){
     alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ".split("");
@@ -220,8 +224,8 @@ function init(){
     perm = initialPermutation(alphabet);
     resetPermutation();
 
-    document.getElementById("goButton").innerHTML = "1000 Trial Moves";
-    document.getElementById("goButton").onclick = thousandMoves;
+    //document.getElementById("goButton").innerHTML = "1000 Trial Moves";
+    //document.getElementById("goButton").onclick = thousandMoves;
     //randomizePermutation(alphabet);
     //pcState.draw(perm);
 
