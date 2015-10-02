@@ -36,7 +36,7 @@ function PermutationCanvasState(canvas,alphabet){
     this.height = canvas.height;
     this.ctx = canvas.getContext('2d');
     this.alphabet = alphabet;
-    this.perm = new Object();
+    //this.perm = new Object();
 
     this.lines = [];
 
@@ -57,9 +57,9 @@ function PermutationCanvasState(canvas,alphabet){
     }
 
     //initialize the permutation
-    for(var i = 0; i < alphabet.length; i++){
+    /*for(var i = 0; i < alphabet.length; i++){
         this.perm[alphabet[i]] = i;
-    }
+    }*/
 
     //var myState = this;
 }
@@ -68,10 +68,10 @@ PermutationCanvasState.prototype.clear = function(){
     this.ctx.clearRect(0,0,this.width,this.height);
 }
 
-PermutationCanvasState.prototype.draw = function(){
+PermutationCanvasState.prototype.draw = function(perm){
     var alphabet = this.alphabet;
     var ctx = this.ctx;
-    var perm = this.perm;
+    //var perm = this.perm;
 
     this.clear();
     ctx.font = "14px Arial";
@@ -92,15 +92,143 @@ PermutationCanvasState.prototype.draw = function(){
     ctx.closePath();
 }
 
+function initialPermutation(alphabet){
+    var d = new Object();
+    var alph = alphabet;
+    //Initialize the dictionary with the identity mapping
+    for (var i=0; i<alph.length; i++){
+        d[alph[i]]=i;
+    }
+    return d;
+}
+
+function randomizePermutation(alphabet){
+    //Randomize the dictionary
+    var alph = alphabet;
+    var j = 0;
+    var temp = 0;
+    for (var i=1; i<alph.length; i++){
+        //Swap element i randomly with some element j <= i
+        j = Math.floor(Math.random()*(i+1));
+        //d[alph[i]] = d[alph[j]]
+        //d[alph[j]] = d[alph[i]]
+        temp = perm[alph[i]];
+        perm[alph[i]] = perm[alph[j]];
+        perm[alph[j]] = temp;
+    }
+}
+
+//decrypt the plaintext according to the input permutation
+function decrypt(p){
+    var ciphertext=document.getElementById("ciphertextArea").value;
+    myFunc=function(c){
+        return alphabet[p[c]];
+    };
+    var plainText = ciphertext.split('').map(myFunc).join("");
+    return plainText;
+    //document.getElementById("plaintextArea").value = plainText;
+}
+
+//Actually, log-likelihood
+function likelihood(text){
+    var s=0.0;
+    //output=document.getElementById("plaintextArea").value;
+    for(var i = 0; i < text.length-1; i++){
+        s += parseFloat(trans[text.substring(i,i+2)]);
+    }
+    return s;
+}
+
+function resetPermutation(){
+    randomizePermutation(alphabet);
+    //erasePermutation();
+    pcState.draw(perm);
+    //showAlphabets();
+    //drawPermutation();
+    //decrypt();
+    document.getElementById("plaintextArea").value = decrypt(perm);    
+}
+
+function updatePermutation(){
+    pcState.draw(perm);
+    document.getElementById("plaintextArea").value = decrypt(perm);    
+}
+
+function trialMove(){
+    output=document.getElementById("plaintextArea").value;
+    initialLL = likelihood(output);
+    //console.log(initialLL);
+    //generate trial move
+    //perm[alphabet[i]]=perm[alphabet[j]] and vice versa
+    var len = alphabet.length;
+    var i = Math.floor(Math.random()*len);
+    var j = i;
+    while (i === j){
+        j = Math.floor(Math.random()*len);
+    }
+    //console.log("Trial move:", i, j);
+    //Make the change to the permutation (we will undo it if
+    //the move is rejected)
+    var temp = perm[alphabet[i]];
+    perm[alphabet[i]] = perm[alphabet[j]];
+    perm[alphabet[j]] = temp;
+    //Find the new likelihood
+    var newOutput = decrypt(perm);
+    newLL = likelihood(newOutput);
+    //console.log("New LL: ", newLL);
+    //If the new LL is greater, then accept the move
+    if (newLL > initialLL){
+        //console.log("Move accepted, increases LL.");
+        //updatePermutation();
+        return true;
+    }
+    var delta = newLL - initialLL;
+    //console.log("deltaLL = ",delta);
+    T = parseFloat(document.getElementById("temperatureArea").value);
+    //console.log("T = ", T); 
+    var beta = 1.0/T;
+    if (Math.random()<Math.pow(10.0,beta*delta)){
+        //Accept the move
+        //console.log("Move accepted by Metropolis");
+        //updatePermutation();
+        return true;
+    }
+    else{
+        //Undo the move
+        temp = perm[alphabet[i]];
+        perm[alphabet[i]] = perm[alphabet[j]];
+        perm[alphabet[j]] = temp;
+        return false;
+    }
+    //console.log(Math.pow(10.00,0.5));
+}
+
+function thousandMoves(){
+    for (var i=0;i<1000;i++){
+        trialMove();
+    }
+    updatePermutation();
+}
+
+var pcState;
+var perm;
+var alphabet;
+
 function init(){
-    var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ".split("");
-    var s = new PermutationCanvasState(document.getElementById('permutationCanvas'),alphabet);
-    s.draw();
+    alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ".split("");
+    pcState = new PermutationCanvasState(document.getElementById('permutationCanvas'),alphabet);
+    perm = initialPermutation(alphabet);
+    resetPermutation();
+
+    document.getElementById("goButton").innerHTML = "1000 Trial Moves";
+    document.getElementById("goButton").onclick = thousandMoves;
+    //randomizePermutation(alphabet);
+    //pcState.draw(perm);
 
     //Check for web workers, and if they are available, change
     //the 1000 Trial Moves button to Go!
     //var w = undefined;
-    if(typeof(Worker) === "undefined") {
+    /*if(typeof(Worker) === "undefined") {
         document.getElementById("goButton").innerHTML = "1000 Trial Moves";
         document.getElementById("goButton").onclick = thousandMoves;
     }
@@ -113,5 +241,5 @@ function init(){
             };
             w.postMessage("Blah");
         }
-    }
+    }*/
 }
