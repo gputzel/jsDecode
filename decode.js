@@ -1,43 +1,3 @@
-/*var c = document.getElementById("pict");
-var ctx = c.getContext("2d");
-var w = c.width;
-var h = c.height;
-
-var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ".split("");
-*/
-
-/*function drawPermutation(alphabet,perm){
-    ctx.strokeStyle="#FF0000";
-    ctx.beginPath();
-    for(var i=0; i < alphabet.length; i++){
-        //console.log(i,alphabet[i],perm[alphabet[i]])
-        ctx.moveTo(25, 16+20*i);
-        ctx.lineTo(w-32,16+20*perm[alphabet[i]]);
-    }
-    ctx.stroke();
-    ctx.closePath();
-}*/
-
-/*function showAlphabets(alphabet){
-    ctx.font = "14px Arial";
-    //Draw alphabet on left and right side of canvas
-    for (var i=0; i<alphabet.length; i++){
-        ctx.fillText(wrapSpace(alphabet[i]),10,20+20*i);
-        ctx.fillText(wrapSpace(alphabet[i]),w-25,20+20*i);
-    }
-}*/
-
-/*function erasePermutation(){
-    ctx.fillStyle="white";
-    ctx.fillRect(24,0,w-50,h); 
-}*/
-
-/*function updatePermutation(){
-    erasePermutation();
-    drawPermutation();
-    //document.getElementById("plaintextArea").value = decrypt(perm);   
-}*/
-
 //For the display of the alphabet, wrap the space
 //character in single quotes
 function wrapSpace(s){
@@ -48,14 +8,6 @@ function wrapSpace(s){
         return s;
     }
 }
-
-/*
-ctx.font = "14px Arial";
-//Draw alphabet on left and right side of canvas
-for (var i=0; i<alphabet.length; i++){
-    ctx.fillText(wrapSpace(alphabet[i]),10,20+20*i);
-    ctx.fillText(wrapSpace(alphabet[i]),w-25,20+20*i);
-}*/
 
 function go(){
     //console.log("Go go go");
@@ -139,14 +91,6 @@ PermutationCanvasState.prototype.draw = function(){
     ctx.stroke();
     ctx.closePath();
 }
-
-/*
-var c = document.getElementById("pict");
-var ctx = c.getContext("2d");
-var w = c.width;
-var h = c.height;
-var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ".split("");
-*/
 
 function init(){
     var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ".split("");
