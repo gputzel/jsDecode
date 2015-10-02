@@ -37,3 +37,7 @@ canvas {
 #traininglink {
     text-align:center;
 }
+
+textarea {
+    font-family:monospace;
+}
