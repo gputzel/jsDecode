@@ -5,7 +5,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="transition.js"></script>
 </head>
-<body>
+<body onLoad="init()">
 <h1>Markov Chain Monte Carlo decoder</h1>
 <table>
     <tr>
@@ -21,7 +21,7 @@
             <p><textarea id="temperatureArea" rows="1" cols="30">5.0</textarea></p>
         </td>
         <td>
-            <p><canvas id="pict" width="400" height="550"></canvas></p>
+            <p><canvas id="permutationCanvas" width="400" height="550"></canvas></p>
             <table>
                 <tr>
                     <td>
