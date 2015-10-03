@@ -3,6 +3,8 @@
 <title>jsDecode</title>
 <link rel="stylesheet" type="text/css" href="CSS/style.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="rangeslider.min.js"></script>
+<script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="transition.js"></script>
 </head>
 <body onLoad="init()">
@@ -17,8 +19,12 @@
             <p id="traininglink"><a href="http://www.gutenberg.org/cache/epub/2600/pg2600.txt">War and Peace</a></p>
             <h2 class="label">Target alphabet</h2>
             <p class="label">A-Z plus space</p>
-            <h2 class="label">"Temperature"</h2>
-            <p><textarea id="temperatureArea" rows="1" cols="30">5.0</textarea></p>
+            <h2 class="label" id="temp">Temperature: 5</h2>
+            <p>
+            <!--<textarea id="temperatureArea" rows="1" cols="30">5.0</textarea>-->
+            <input type="range" name="tempInput" min="0.01" max="25" step="1" value="5"
+                onchange="T=this.value;document.getElementById('temp').innerHTML='Temperature: ' + this.value">
+            </p>
         </td>
         <td>
             <p><canvas id="permutationCanvas" width="400" height="550"></canvas></p>
@@ -37,8 +43,8 @@
             </table>
         </td>
         <td>
-            <h2 class="label">Likelihood Plot</h2>
-            <p><canvas id="likelihood" width="200" height="150"></canvas></p>
+            <h2 class="label">Log-Likelihood</h2>
+            <p id="likelihood"><!--<svg id="likelihood" width="200" height="150"></svg>--></p>
             <h2 class="label">Output</h2>
             <textarea id="plaintextArea" rows="16" cols="30"></textarea>
         </td>

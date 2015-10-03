@@ -16,7 +16,7 @@ td {
     text-align:center;
 }
 
-button {
+button,input {
     padding:0;
     margin:auto;
     display:block;
@@ -41,3 +41,22 @@ canvas {
 textarea {
     font-family:monospace;
 }
+
+svg {
+    font: 10px sans-serif;
+}
+
+.line {
+    fill: none;
+    stroke: #000;
+    stroke-width: 1.5px;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+
+.axis text {display: none;}

@@ -119,6 +119,11 @@ function likelihood(text){
     return s;
 }
 
+//returns the current log-likelihood
+function currentLL(){
+    return likelihood(decrypt(perm));
+}
+
 function resetPermutation(){
     randomizePermutation(alphabet);
     //erasePermutation();
@@ -164,7 +169,7 @@ function trialMove(){
     }
     var delta = newLL - initialLL;
     //console.log("deltaLL = ",delta);
-    T = parseFloat(document.getElementById("temperatureArea").value);
+    //T = parseFloat(document.getElementById("temperatureArea").value);
     //console.log("T = ", T); 
     var beta = 1.0/T;
     if (Math.random()<Math.pow(10.0,beta*delta)){
@@ -195,6 +200,16 @@ function step(){
         trialMove();
     }
     updatePermutation();
+    llList.push(currentLL());
+    llList.shift();
+
+    path
+        .attr("d",line)
+        .attr("transform",null)
+        .transition()
+            .duration(50)
+            .ease("linear")
+            .attr("transform", "translate(" + x(-1) + ",0)");
 }
 
 function go(){
@@ -213,17 +228,77 @@ function stop(){
     clearInterval(plotTimer);
 }
 
+function initListData(){
+    var ll = currentLL();
+    for (var i=0; i<llListLength; i++){
+        llList.push(ll);
+    }
+}
+
 var pcState;
 var perm;
 var alphabet;
 var plotTimer;
+var llListLength = 100;
+var llList=[];
+var T = 5.0;
+
+var svg;
+var path;
+var line;
+var x,y;
 
 function init(){
     alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ".split("");
+
+    /*$('input[type="range"]').rangeslider({
+        onSlide : function(position,value){console.log(value);}
+    });*/
+
     pcState = new PermutationCanvasState(document.getElementById('permutationCanvas'),alphabet);
     perm = initialPermutation(alphabet);
     resetPermutation();
 
+    initListData();
+    
+    //var width = 200;
+    //var height = 150;
+    var margin = {top: 20, right: 20, bottom: 20, left: 40},
+        width = 250 - margin.left - margin.right,
+        height = 150 - margin.top - margin.bottom;
+
+
+    x = d3.scale.linear()
+        .domain([0,llListLength-1])
+        .range([0,width]);
+    y = d3.scale.linear()
+        .domain([-1600,0])
+        .range([height,0]);
+    line = d3.svg.line()
+        .x(function(d,i) { return x(i);})
+        .y(function(d,i) { return y(d);});
+    svg = d3.select("#likelihood").append("svg")
+        .attr("width",width+margin.left + margin.right).attr("height",height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform","translate(" + 0 +"," + 0 + ")");
+    svg.append("defs").append("clipPath")
+        .attr("id", "clip")
+        .append("rect")
+        .attr("width", width)
+        .attr("height", height);
+    svg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + y(0) + ")")
+        .call(d3.svg.axis().scale(x).ticks(0).orient("bottom"));
+    svg.append("g")
+        .attr("class", "y axis")
+        .call(d3.svg.axis().scale(y).ticks(0).orient("left"));
+    path = svg.append("g")
+        .attr("clip-path", "url(#clip)")
+        .append("path")
+        .datum(llList)
+        .attr("class", "line")
+        .attr("d", line);
     //document.getElementById("goButton").innerHTML = "1000 Trial Moves";
     //document.getElementById("goButton").onclick = thousandMoves;
     //randomizePermutation(alphabet);
