@@ -16,6 +16,12 @@ td {
     text-align:center;
 }
 
+#likelihood {
+    padding:0;
+    margin:auto;
+    display:block;
+}
+
 button,input {
     padding:0;
     margin:auto;
