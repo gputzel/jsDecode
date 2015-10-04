@@ -235,6 +235,20 @@ function initListData(){
     }
 }
 
+function filterKeycode(keyCode){
+   var c = String.fromCharCode(keyCode);
+   if (c.match(/[a-z]/i)){
+        return c.toUpperCase();
+   }
+   if (c.match(/[A-Z]/i)){
+        return c;
+   }
+   if (c === " "){
+       return c;
+   }
+   return "";
+}
+
 var pcState;
 var perm;
 var alphabet;
@@ -266,6 +280,22 @@ function init(){
     var margin = {top: 20, right: 20, bottom: 20, left: 40},
         width = 250 - margin.left - margin.right,
         height = 150 - margin.top - margin.bottom;
+
+    $('#ciphertextArea').keypress(function (e) {
+        if (true) {
+            var myValue = filterKeycode(e.keyCode);
+            var startPos = this.selectionStart;
+            var endPos = this.selectionEnd;
+            var scrollTop = this.scrollTop;
+            this.value = this.value.substring(0, startPos) + myValue + this.value.substring(endPos,this.value.length);
+            this.focus();
+            this.selectionStart = startPos + myValue.length;
+            this.selectionEnd = startPos + myValue.length;
+            this.scrollTop = scrollTop;
+
+            e.preventDefault();
+        }
+    });
 
 
     x = d3.scale.linear()
