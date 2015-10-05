@@ -20,11 +20,14 @@
             <p id="traininglink"><a href="http://www.gutenberg.org/cache/epub/2600/pg2600.txt">War and Peace</a></p>
             <h2 class="label">Target alphabet</h2>
             <p class="label">A-Z plus space</p>
+            <!--<select id="targetAlphabet"><option value="alphabetPlusSpace">A-Z plus space</option><option value="alphabet">A-Z</option></select>-->
             <h2 class="label" id="temp">Temperature: 5</h2>
             <p>
             <!--<textarea id="temperatureArea" rows="1" cols="30">5.0</textarea>-->
             <input type="range" name="tempInput" min="0.01" max="25" step="0.5" value="5"
-                onchange="T=this.value;document.getElementById('temp').innerHTML='Temperature: ' + this.value">
+                onchange="T=this.value;document.getElementById('temp').innerHTML='Temperature: ' + this.value"
+                oninput="T=this.value;document.getElementById('temp').innerHTML='Temperature: ' + this.value"
+                >
             </p>
         </td>
         <td>

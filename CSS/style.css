@@ -22,7 +22,7 @@ td {
     display:block;
 }
 
-button,input {
+button,input,select {
     padding:0;
     margin:auto;
     display:block;

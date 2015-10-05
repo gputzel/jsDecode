@@ -265,6 +265,18 @@ var x,y;
 function init(){
     alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ".split("");
 
+    //console.log(document.getElementById("targetAlphabet").value);
+
+    /*document.getElementById("targetAlphabet").disabled=true;
+    switch(document.getElementById("targetAlphabet").value){
+        case "alphabetWithSpace":
+            alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ".split("");
+            break;
+        case "alphabet":
+            alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+            break;
+    }*/
+
     /*$('input[type="range"]').rangeslider({
         onSlide : function(position,value){console.log(value);}
     });*/
@@ -282,19 +294,17 @@ function init(){
         height = 150 - margin.top - margin.bottom;
 
     $('#ciphertextArea').keypress(function (e) {
-        if (true) {
-            var myValue = filterKeycode(e.keyCode);
-            var startPos = this.selectionStart;
-            var endPos = this.selectionEnd;
-            var scrollTop = this.scrollTop;
-            this.value = this.value.substring(0, startPos) + myValue + this.value.substring(endPos,this.value.length);
-            this.focus();
-            this.selectionStart = startPos + myValue.length;
-            this.selectionEnd = startPos + myValue.length;
-            this.scrollTop = scrollTop;
+        var myValue = filterKeycode(e.keyCode);
+        var startPos = this.selectionStart;
+        var endPos = this.selectionEnd;
+        var scrollTop = this.scrollTop;
+        this.value = this.value.substring(0, startPos) + myValue + this.value.substring(endPos,this.value.length);
+        this.focus();
+        this.selectionStart = startPos + myValue.length;
+        this.selectionEnd = startPos + myValue.length;
+        this.scrollTop = scrollTop;
 
-            e.preventDefault();
-        }
+        e.preventDefault();
     });
 
 
