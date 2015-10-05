@@ -255,7 +255,7 @@ var alphabet;
 var plotTimer;
 var llListLength = 100;
 var llList=[];
-var T = 5.0;
+var T = 3.0;
 
 var svg;
 var path;
